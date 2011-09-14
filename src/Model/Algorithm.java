@@ -1,6 +1,7 @@
 package Model;
 
 import java.awt.Point;
+import Model.Algorithm3.AlgorithmFerry;
 
 /**
  *
@@ -30,7 +31,8 @@ public class Algorithm {
     }
     
     public Output Algorithm3( Input input){
-        return null;
+        AlgorithmFerry alg = new AlgorithmFerry(input);
+        return alg.output;
     }
     
     public Output Algorithm4( Input input){
