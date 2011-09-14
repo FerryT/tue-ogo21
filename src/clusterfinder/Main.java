@@ -1,5 +1,7 @@
 package clusterfinder;
 
+import GUI.MainFrame;
+
 /** ClusterFinder main module
  * This application takes a series of points on a 2-dimential grid and
  * canculates a given number of clusters.
@@ -15,8 +17,6 @@ public class Main {
      */
     public static void main(String[] args)
     {
-        // TODO code application logic here
-        System.out.println("Hello world!");
+        MainFrame.main(args);
     }
 }
-//Carl is cool
