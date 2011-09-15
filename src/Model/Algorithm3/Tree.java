@@ -13,4 +13,21 @@ import java.util.ArrayList;
  */
 public class Tree extends ArrayList<Edge> {
 
+    //@Override
+    public boolean contains(Node node)
+    {
+        for (Edge e: this)
+            if ((e.n1 == node) || (e.n2 == node))
+                return true;
+        return false;
+    }
+
+    public String Print()
+    {
+        String str = "[";
+        for (Edge e: this)
+            str += String.format(" %s ", e.Print());
+        str += "]";
+        return str;
+    }
 }

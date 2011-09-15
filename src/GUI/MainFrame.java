@@ -44,6 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     private void FileChooserSetup(){
         fileChooser.setCurrentDirectory(new java.io.File("C:/Users/s104595/Documents/NetBeansProjects/PuzzleSolver"));
+        fileChooser.setCurrentDirectory(new java.io.File("D:/My Documents/Ogo/2.1/Clusterfinder/ClusterFinder"));
         fileChooser.setDialogTitle("open een puzzeltje");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileChooser.setAcceptAllFileFilterUsed(false);
