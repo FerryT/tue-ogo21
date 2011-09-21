@@ -22,7 +22,7 @@ public class Edge implements Comparable<Edge> {
 
     public int compareTo(Edge o)
     {
-        return (int) ((o.distance - this.distance) * 1000.0);
+        return (int) ((this.distance - o.distance) * 1000.0);
     }
 
     public String Print()

@@ -107,13 +107,44 @@ public class AlgorithmFerry {
             }
         }
 
-        for (Tree t: forest)
-            System.out.printf("%d %s\n", forest.indexOf(t), t.Print());
+        PriorityQueue<Edge> edgeQueue = new PriorityQueue();
 
-        //for (Tree t: forest)
-        //{
-        //    edges = ConnectTrees(edges, t, 1);
-        //}
+        for (Tree t1: forest)
+        {
+            for (Tree t2: forest)
+            {
+                if (t1 == t2)
+                    continue;
+
+                edgeQueue.addAll(ConnectTrees(t1, t2, 1));
+            }
+        }
+
+        while (forest.size() > 8)
+        {
+            Edge edge = edgeQueue.poll();
+            Tree t1 = FindTree(forest, edge.n1);
+            Tree t2 = FindTree(forest, edge.n2);
+            if (t1 != t2)
+            {
+                Tree t = new Tree();
+                t.addAll(t1);
+                t.addAll(t2);
+                forest.remove(t1);
+                forest.remove(t2);
+                forest.add(t);
+            }
+        }
+
+        for (Tree t: forest)
+        {
+            int i = forest.indexOf(t);
+            for (Edge e: t)
+            {
+                e.n1.cluster = i;
+                e.n2.cluster = i;
+            }
+        }
 
         //edges.Print();
     }
@@ -136,7 +167,7 @@ public class AlgorithmFerry {
 
             Tree t1 = FindTree(forest, edge.n1);
             Tree t2 = FindTree(forest, edge.n2);
-            //System.out.printf("%s - %s\n", t1.Print(), t2.Print());
+            
             if (t1 != t2)
             {
                 forest.remove(t1);
@@ -178,6 +209,9 @@ public class AlgorithmFerry {
         TreeSet<Node> ns1 = new TreeSet<Node>();
         TreeSet<Node> ns2 = new TreeSet<Node>();
 
+        t1.Print();
+        t2.Print();
+
         for (Edge e: t1)
         {
             ns1.add(e.n1);
@@ -195,9 +229,7 @@ public class AlgorithmFerry {
                 queue.add(new Edge(n1, n2));
 
         Tree t =  new Tree();
-        t.addAll(t1);
-        t.addAll(t2);
-
+        
         while ((number > 0) && !queue.isEmpty())
         {
             t.add(queue.poll());
