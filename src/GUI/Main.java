@@ -1,6 +1,10 @@
-package Model;
+package GUI;
 
+import Model.Algorithm;
+import Model.ClusterPoint;
 import Model.FileReader;
+import Model.Input;
+import Model.Output;
 import java.awt.Point;
 
 /**
@@ -22,8 +26,9 @@ public class Main {
         FileReader fr = new FileReader();
         algorithm = new Algorithm();
         
-        input = fr.readFromFile("test.txt");
-        PrintInput();
+        input = fr.readFromSystem();
+        //input = fr.readFromFile("test.txt");
+        //PrintInput();
         output = algorithm.Algorithm1(input);
         PrintOutput();
     }
@@ -37,9 +42,8 @@ public class Main {
     }
     
     public void PrintOutput(){
-        System.out.println("-----------------");
         for( ClusterPoint clusterpoint : output.clusterPoints ){
-            System.out.println("(" + clusterpoint.point.x + "," + clusterpoint.point.y + "," + clusterpoint.cluster + ")");
+            System.out.println(clusterpoint.point.x + " " + clusterpoint.point.y + " " + clusterpoint.cluster);
         }
     }
     

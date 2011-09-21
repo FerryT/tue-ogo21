@@ -1,4 +1,3 @@
-
 package Model;
 
 import java.io.PrintStream;
@@ -7,16 +6,21 @@ import java.awt.Point;
 
 /**
  *
- * @author Carl van Dueren den Hollander
+ * @author  OGO 1.2 groep 1
+ *          Carl van Dueren den Hollander, vooral Carl
+ *          Ferry
+ *          Nicky Advokaat
+ *          Roby Visser
+ *          Tim v Dalen
  *
  */
-
 public class ClusterCarl{
     private class Cluster {
         public double[] geoCenter = new double[] {0, 0};
         private double r = 0;
         public Point furthest;
         public ArrayList< Point > list;
+        
 
         public Cluster(Point point) {
             list = new ArrayList<Point>();
@@ -86,12 +90,20 @@ public class ClusterCarl{
         return new Output( nrOfClusters, nrOfPoints, clusterPoints);
     }
 
+    private ArrayList<Cluster> getInRange(double x0, double x1, double y0, double y1){
+        ArrayList<Cluster> range = new ArrayList<Cluster>();
+        for (int i = 0; i < c.size(); i++)  if (c.get(i).geoCenter[0] >= x0 && c.get(i).geoCenter[0] <= x1 && c.get(i).geoCenter[1] >= y0 && c.get(i).geoCenter[1] <= y1) range.add(c.get(i));
+        return range;
+    }
+    
     private Cluster getClosestCluster(Cluster c0) {
         //TODO improve efficiency
         double d;
         double min = 0;
         Cluster minc = null;
-        for (Cluster c1 : c) {
+        double x = c0.geoCenter[0], y = c0.geoCenter[1], bound = getBound(c0);;
+        ArrayList<Cluster> cList = getInRange(x-bound, x+bound, y-bound, y+bound);
+        for (Cluster c1 : cList) {
             if (c0 != c1) {
                 d = getDistance(c0, c1);
                 if (min == 0 || d < min) {
@@ -110,7 +122,7 @@ public class ClusterCarl{
     }
 
     private double getBound(Cluster c0) {
-        return (c0.r+1)*2;
+        return (c0.r+1)*4;
     }
 
     public void printClusters(PrintStream out) {

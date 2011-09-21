@@ -55,4 +55,23 @@ public class FileReader {
         
         return new Input( nrOfClusters, nrOfPoints, points );
     }
+    
+    public Input readFromSystem(){
+        ArrayList< Point > points = new ArrayList< Point >();
+        Scanner scanner = new Scanner(System.in);
+        
+        scanner.next(); // skip "find"
+        int nrOfClusters = scanner.nextInt();
+        scanner.nextLine(); // skip "clusters"
+        int nrOfPoints = scanner.nextInt();
+        scanner.nextLine(); // skip "points"
+        
+        for(int i = 0; i < nrOfPoints; i++){
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            points.add( new Point(x,y));
+        }
+        
+        return new Input( nrOfClusters, nrOfPoints, points );
+    }
 }

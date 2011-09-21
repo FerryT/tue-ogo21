@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Model.Algorithm3;
+package Algorithm3;
 
 import java.util.Collections;
 import java.util.ArrayList;
@@ -107,15 +107,15 @@ public class AlgorithmFerry {
             }
         }
 
-        //for (Tree t: forest)
-        //    System.out.printf("%d %s\n", forest.indexOf(t), t.Print());
-
         for (Tree t: forest)
-        {
-            edges = ConnectTrees(edges, t, 1);
-        }
+            System.out.printf("%d %s\n", forest.indexOf(t), t.Print());
 
-        edges.Print();
+        //for (Tree t: forest)
+        //{
+        //    edges = ConnectTrees(edges, t, 1);
+        //}
+
+        //edges.Print();
     }
 
     public void Kruskal(int count)

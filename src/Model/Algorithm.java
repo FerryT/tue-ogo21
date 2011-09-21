@@ -1,11 +1,17 @@
 package Model;
 
 import java.awt.Point;
-import Model.Algorithm3.AlgorithmFerry;
 
 /**
+ * Here are several solving algorithms named Algorithm1,Algorithm2...Algorithm(n)
+ * Always use  public Output Algorithm(n)(Input) for use with graphic interface
  *
- * @author nicky
+ * @author  OGO 1.2 groep 1
+ *          Carl van Dueren den Hollander
+ *          Ferry
+ *          Nicky Advokaat
+ *          Roby Visser
+ *          Tim v Dalen
  */
 public class Algorithm {
     
@@ -13,6 +19,7 @@ public class Algorithm {
         
     }
     
+    // randomnes
     public Output Algorithm1( Input input ){
         Output output = new Output(input.nrOfClusters);
         
@@ -25,14 +32,16 @@ public class Algorithm {
         return output;
     }
     
+    // Carlnes
     public Output Algorithm2( Input input){
         ClusterCarl clusterCarl = new ClusterCarl();
         return clusterCarl.ClusterHierarchy(input);
     }
     
     public Output Algorithm3( Input input){
-        AlgorithmFerry alg = new AlgorithmFerry(input);
-        return alg.output;
+        Algorithm3.AlgorithmFerry alg3 = new Algorithm3.AlgorithmFerry(input);
+        alg3.Calculate();
+        return alg3.output;
     }
     
     public Output Algorithm4( Input input){

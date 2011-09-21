@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Model.Algorithm3;
+package Algorithm3;
 
 import java.util.ArrayList;
 
