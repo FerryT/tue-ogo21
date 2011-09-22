@@ -44,6 +44,7 @@ public class Algorithm {
     }
     
     public Output Algorithm4( Input input){
-        return null;
+        Algorithm32.AlgorithmFerry alg32 = new Algorithm32.AlgorithmFerry(input);
+        return alg32.output;
     }
 }
