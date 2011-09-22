@@ -26,7 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Output output;
     private FileReader filereader;
     private Algorithm algorithm;
-    private static int size = 50; // size of point drawn at screen
+    private static double size = 5000.0; // size of point drawn at screen
     private static int relSize = 90;
     private JFileChooser fileChooser = new JFileChooser();
     
@@ -87,9 +87,9 @@ public class MainFrame extends javax.swing.JFrame {
             super.paintComponent(g);
             for( Point p : input.points ){;
                 g.setColor(Color.blue);
-                int circleX = ( p.x + right ) * size;
-                int circleY = ( p.y + down ) * size;
-                int circleSize = size * relSize / 100 ;    
+                int circleX = (int) ((double) ( p.x + right ) * size);
+                int circleY = (int) ((double) ( p.y + down ) * size);
+                int circleSize = (int) (size * (double)relSize / 100.0) ;
                 g.fillOval(circleX, circleY, circleSize, circleSize);
             }
             g.setColor(Color.red);
@@ -109,9 +109,9 @@ public class MainFrame extends javax.swing.JFrame {
             super.paintComponent(g);
             for( ClusterPoint p : output.clusterPoints ){
                 g.setColor( getColor(p.cluster) );
-                int circleX = ( p.point.x + right ) * size;
-                int circleY = ( p.point.y + down ) * size;
-                int circleSize = size * relSize / 100 ;    
+                int circleX = (int)((double) ( p.point.x + right ) * size);
+                int circleY = (int) ((double) ( p.point.y + down ) * size);
+                int circleSize = (int) (size * (double) relSize / 100 );
                 g.fillOval(circleX, circleY, circleSize, circleSize);
             }
             g.setColor(Color.red);
@@ -268,9 +268,10 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
+            .addGap(0, 601, Short.MAX_VALUE)
         );
 
+        jSlider1.setMaximum(10000);
         jSlider1.setMinimum(2);
         jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -286,7 +287,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
+            .addGap(0, 601, Short.MAX_VALUE)
         );
 
         jButton1.setText("Open File");
@@ -312,7 +313,7 @@ public class MainFrame extends javax.swing.JFrame {
         jTextField1.setText("No File Selected");
         jTextField1.setEnabled(false);
 
-        jSlider2.setMaximum(300);
+        jSlider2.setMaximum(30000000);
         jSlider2.setMinimum(20);
         jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -460,7 +461,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
         // TODO add your handling code here:
-        size = jSlider1.getValue();
+        size = jSlider1.getValue() / 100000.0;
         jPanel1.repaint();
         jPanel2.repaint();
     }//GEN-LAST:event_jSlider1StateChanged
@@ -508,22 +509,22 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jSlider2StateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        right+=100;
+        right+=10000;
         repaint();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        down-=100;
+        down-=10000;
         repaint();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        down+=100;
+        down+=10000;
         repaint();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        right-=100;
+        right-=10000;
         repaint();
     }//GEN-LAST:event_jButton6ActionPerformed
 

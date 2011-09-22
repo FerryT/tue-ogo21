@@ -40,7 +40,6 @@ public class Algorithm {
     
     public Output Algorithm3( Input input){
         Algorithm3.AlgorithmFerry alg3 = new Algorithm3.AlgorithmFerry(input);
-        alg3.Calculate();
         return alg3.output;
     }
     

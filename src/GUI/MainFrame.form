@@ -154,6 +154,7 @@
     </Container>
     <Component class="javax.swing.JSlider" name="jSlider1">
       <Properties>
+        <Property name="maximum" type="int" value="10000"/>
         <Property name="minimum" type="int" value="2"/>
       </Properties>
       <Events>
@@ -221,7 +222,7 @@
     </Component>
     <Component class="javax.swing.JSlider" name="jSlider2">
       <Properties>
-        <Property name="maximum" type="int" value="300"/>
+        <Property name="maximum" type="int" value="30000000"/>
         <Property name="minimum" type="int" value="20"/>
       </Properties>
       <Events>

@@ -35,9 +35,13 @@ public class AlgorithmFerry {
 
     public void Calculate()
     {
+        System.out.print("Pass 1...");
         CreateNodes();
+        System.out.print("Pass 2...");
         RemoveNoise();
-        CreateEdges();
+        System.out.print("Pass 3...");
+        //CreateEdges();
+        System.out.print("Pass 4...");
         //Kruskal(3);
 
         for (Node node: nodes)
@@ -59,13 +63,29 @@ public class AlgorithmFerry {
         {
             n.DefineNearestNode(nodes);
             n.nearestDistance *= -1;
+            n.cluster = 1;
         }
         
         Collections.sort(nodes);
 
         PriorityQueue<Node> queue = new PriorityQueue(nodes);
+        double maxd = Float.MIN_VALUE;
+        double vd = 0;
+        double d = 0;
+        int range = 0;
+        while (!queue.isEmpty())
+        {
+            vd = queue.peek().nearestDistance - d;
+            d = queue.poll().nearestDistance;
+            if (vd > maxd)
+            {
+                maxd = vd;
+                range = queue.size();
+            }
+        }
 
-        int range = (int) (queue.size() * 0.9);
+        queue = new PriorityQueue(nodes);
+        //if (maxd < 2.0) range = queue.size();
         while (queue.size() > range)
         {
             Node node = queue.poll();
