@@ -2,6 +2,7 @@
 package Algorithm32;
 
 import java.awt.Point;
+import java.util.PriorityQueue;
 
 /**
  *
@@ -12,31 +13,33 @@ public class Node implements Comparable<Node> {
     public Point point;
     public int cluster;
 
-    public Node nearestNode;
-    public double nearestDistance;
-    public Node secondNode;
-    public double secondDistance;
+    public Proxy nearest;
+    public PriorityQueue<Proxy> cache;
 
     public Node(Point point)
     {
         this.point = point;
         this.cluster = 1;
+        nearest = new Proxy();
+        cache = new PriorityQueue();
     }
 
     public void Measure(Node node)
     {
         double distance = point.distance(node.point);
-        if (distance <= nearestDistance)
+        if (distance <= nearest.distance)
         {
-            secondNode = nearestNode;
-            secondDistance = nearestDistance;
-            nearestNode = node;
-            nearestDistance = distance;
+            nearest.node = node;
+            nearest.distance = distance;
+            Proxy p = new Proxy();
+            p.distance = distance;
+            p.node = node;
+            cache.add(p);
         }
     }
 
     public int compareTo(Node o)
     {
-        return (int) ((this.nearestDistance - o.nearestDistance) * 1000.0);
+        return (int) ((this.nearest.distance - o.nearest.distance) * 1000.0);
     }
 }

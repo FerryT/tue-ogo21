@@ -6,6 +6,7 @@ import Model.FileReader;
 import Model.Input;
 import Model.Output;
 import java.awt.Point;
+import java.io.FileWriter;
 
 /**
  *
@@ -23,14 +24,14 @@ public class Main {
     Algorithm algorithm;
     
     public void Main(){
-        FileReader fr = new FileReader();
+        FileReader fr = new FileReader(); 
         algorithm = new Algorithm();
         
-        input = fr.readFromSystem();
-        //input = fr.readFromFile("test.txt");
+        //input = fr.readFromSystem();
+        input = fr.readFromFile("puntjes.txt");
         //PrintInput();
-        output = algorithm.Algorithm1(input);
-        PrintOutput();
+        output = algorithm.Algorithm4(input);
+        WriteOutput("output.txt");
     }
     
     public void PrintInput(){
@@ -45,6 +46,16 @@ public class Main {
         for( ClusterPoint clusterpoint : output.clusterPoints ){
             System.out.println(clusterpoint.point.x + " " + clusterpoint.point.y + " " + clusterpoint.cluster);
         }
+    }
+    
+    public void WriteOutput(String filename)
+    {
+        FileWriter fw;
+        try { fw = new FileWriter(filename);
+
+        for (ClusterPoint clusterpoint : output.clusterPoints)
+            fw.append(clusterpoint.point.x + " " + clusterpoint.point.y + " " + clusterpoint.cluster + "\n");
+        } catch(Exception e) {}
     }
     
     public static void main(String[] args){

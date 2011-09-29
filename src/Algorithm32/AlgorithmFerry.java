@@ -19,6 +19,7 @@ public class AlgorithmFerry {
     public int minX, minY, maxX, maxY;
 
     private ArrayList<Node> nodes;
+    static Sector[][] table; // Allocated staticly because I expect it can grow bigger that way
 
     public AlgorithmFerry(Input input)
     {
@@ -41,26 +42,23 @@ public class AlgorithmFerry {
         long t2 = System.currentTimeMillis();
         System.out.printf("pass #1: %f sec\n", (t2 - t1) / 1000.0);
 
-        CreateSectors(50, 50);
+        CreateSectors((maxX - minX) / 128, (maxY - minY) / 128);
 
         long t3 = System.currentTimeMillis();
         System.out.printf("pass #2: %f sec\n", (t3 - t2) / 1000.0);
 
-        NoiseReduction();
+        //NoiseReduction();
 
         long t4 = System.currentTimeMillis();
         System.out.printf("pass #3: %f sec\n", (t4 - t3) / 1000.0);
 
-
-        NoiseReduction();
+        OutputNodes();
 
         long t5 = System.currentTimeMillis();
         System.out.printf("pass #4: %f sec\n", (t5 - t4) / 1000.0);
 
-        OutputNodes();
-
         long t6 = System.currentTimeMillis();
-        System.out.printf("pass #4: %f sec\n", (t6 - t5) / 1000.0);
+        //System.out.printf("pass #5: %f sec\n", (t6 - t5) / 1000.0);
         System.out.printf("Total: %f sec\n", (t6 - t1) / 1000.0);
 
         
@@ -85,7 +83,7 @@ public class AlgorithmFerry {
         int W = ((maxX - minX) / w) + 1;
         int H = ((maxY - minY) / h) + 1;
         System.out.printf("Sector size: %d x %d\nNumber: %d x %d\n", w, h, W, H);
-        Sector[][] table = new Sector[H][W];
+        table = new Sector[H][W];
 
         for (int y = 0; y < H; ++y)
         for (int x = 0; x < W; ++x)
@@ -121,22 +119,25 @@ public class AlgorithmFerry {
         PriorityQueue<Node> queue = new PriorityQueue(nodes);
 
         double maxd = Float.MIN_VALUE;
+        double mind = Float.MAX_VALUE;
         double vd = 0;
         double d = 0;
         int range = 0;
         while (!queue.isEmpty())
         {
-            vd = queue.peek().nearestDistance - d;
-            d = queue.poll().nearestDistance;
+            vd = queue.peek().nearest.distance - d;
+            d = queue.poll().nearest.distance;
             if (vd > maxd)
             {
                 maxd = vd;
                 range = queue.size();
             }
+            if (vd < mind)
+                mind = vd;
         }
 
         queue = new PriorityQueue(nodes);
-        if (maxd > 2.0) range = queue.size();
+        if (maxd > mind * 2.0) range = queue.size();
         while (queue.size() > range)
         {
             Node node = queue.poll();
@@ -147,7 +148,8 @@ public class AlgorithmFerry {
 
     public void OutputNodes()
     {
+        System.out.printf("Outputing %d nodes.\n", nodes.size());
         for (Node n: nodes)
-            output.add(new ClusterPoint(n.point, n.cluster));
+            output.add(new ClusterPoint(n.point, 1));
     }
 }
