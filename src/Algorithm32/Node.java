@@ -14,6 +14,8 @@ public class Node implements Comparable<Node> {
 
     public Node nearestNode;
     public double nearestDistance;
+    public Node secondNode;
+    public double secondDistance;
 
     public Node(Point point)
     {
@@ -24,8 +26,10 @@ public class Node implements Comparable<Node> {
     public void Measure(Node node)
     {
         double distance = point.distance(node.point);
-        if (distance < nearestDistance)
+        if (distance <= nearestDistance)
         {
+            secondNode = nearestNode;
+            secondDistance = nearestDistance;
             nearestNode = node;
             nearestDistance = distance;
         }

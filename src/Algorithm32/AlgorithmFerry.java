@@ -25,10 +25,10 @@ public class AlgorithmFerry {
         this.input = input;
         this.output = new Model.Output(2);
         this.nodes = new ArrayList();
-        this.minX = Integer.MIN_VALUE;
-        this.minY = Integer.MIN_VALUE;
-        this.maxX = Integer.MAX_VALUE;
-        this.maxY = Integer.MAX_VALUE;
+        this.minX = Integer.MAX_VALUE;
+        this.minY = Integer.MAX_VALUE;
+        this.maxX = Integer.MIN_VALUE;
+        this.maxY = Integer.MIN_VALUE;
         Calculate();
     }
 
@@ -41,16 +41,29 @@ public class AlgorithmFerry {
         long t2 = System.currentTimeMillis();
         System.out.printf("pass #1: %f sec\n", (t2 - t1) / 1000.0);
 
-        NoiseReduction();
+        CreateSectors(50, 50);
 
         long t3 = System.currentTimeMillis();
         System.out.printf("pass #2: %f sec\n", (t3 - t2) / 1000.0);
 
-        OutputNodes();
+        NoiseReduction();
 
         long t4 = System.currentTimeMillis();
         System.out.printf("pass #3: %f sec\n", (t4 - t3) / 1000.0);
-        System.out.printf("Total: %f sec\n", (t4 - t1) / 1000.0);
+
+
+        NoiseReduction();
+
+        long t5 = System.currentTimeMillis();
+        System.out.printf("pass #4: %f sec\n", (t5 - t4) / 1000.0);
+
+        OutputNodes();
+
+        long t6 = System.currentTimeMillis();
+        System.out.printf("pass #4: %f sec\n", (t6 - t5) / 1000.0);
+        System.out.printf("Total: %f sec\n", (t6 - t1) / 1000.0);
+
+        
     }
 
     public void AddNodes()
@@ -62,17 +75,45 @@ public class AlgorithmFerry {
             minY = Math.min(minY, p.y);
             maxY = Math.max(maxY, p.y);
             Node node = new Node(p);
-            //for (Node n: nodes)
-            //    n.Measure(node);
             nodes.add(node);
         }
+        System.out.printf("Dimentions: %d-%d x %d-%d\n", minX, maxX, minY, maxY);
     }
 
     public void CreateSectors(int w, int h)
     {
-        int W = (maxX - minX) / w;
-        int H = (maxY - minY) / h;
-        int x, y;
+        int W = ((maxX - minX) / w) + 1;
+        int H = ((maxY - minY) / h) + 1;
+        System.out.printf("Sector size: %d x %d\nNumber: %d x %d\n", w, h, W, H);
+        Sector[][] table = new Sector[H][W];
+
+        for (int y = 0; y < H; ++y)
+        for (int x = 0; x < W; ++x)
+        {
+            Sector s = new Sector();
+            table[y][x] = s;
+            if (x > 0)
+            {
+                s.w = table[y][x-1];
+                table[y][x-1].e = s;
+            }
+            if (y > 0)
+            {
+                s.n = table[y-1][x];
+                table[y-1][x].s = s;
+            }
+        }
+
+        for (Node n: nodes)
+        {
+            int x = (n.point.x - minX) / w;
+            int y = (n.point.y - minY) / h;
+            table[y][x].add(n);
+        }
+
+        for (int y = 0; y < H; ++y)
+        for (int x = 0; x < W; ++x)
+            table[y][x].MeasureNodes();
     }
 
     public void NoiseReduction()
